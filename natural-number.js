@@ -29,9 +29,18 @@ natNumber.prototype={
 		//walk thru this string picking numbers
 
 		var words = S(string).humanize().s.split(' ');
+		var number=null;
 
 		//loop thru the words
 		words.forEach(function(word){
+
+			//test for number
+			number=readint(word, natNumber.options.leng);
+
+			//add word to concat untill number match is broken
+			
+			console.log(word,number);
+
 
 		})
 

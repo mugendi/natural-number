@@ -53,8 +53,11 @@ natNumber.prototype={
 		//loop thru the words
 		words.forEach(function(word){
 
-			//first deal wit formatted numbers using numeral
-			word=numeral().unformat(word);
+			//first deal wit formatted numbers using numeral if we see any numerals
+			if(/[0-9]/.test(word)){
+				word=numeral().unformat(word);
+			}
+			
 
 			//test for number
 			number= readint(word, natNumber.options.leng) 

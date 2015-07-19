@@ -35,7 +35,8 @@ natNumber.prototype={
 
 		//walk thru this string picking numbers
 
-		var words = S(string).humanize()
+		var words = S(string)
+							 // .humanize()
 							 .strip(stopwords) //remove certain noise words within numbers
 							 .stripPunctuation() //remove puncts
 							 .s

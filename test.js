@@ -1,7 +1,4 @@
 
-
-
-
 var natN=require('./natural-number.js');
 
 var natural_number=new natN({

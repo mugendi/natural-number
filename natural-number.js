@@ -59,7 +59,7 @@ natNumber.prototype={
 			}
 
 			//if we think number is roman, then attempt to deromanize
-			if(/^[LMI]$/.test(word)){
+			if(/^[LVI]$/.test(word)){
 				word=deromanize(word);
 			}
 			

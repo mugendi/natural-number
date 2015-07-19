@@ -21,10 +21,19 @@ natNumber.prototype={
 		natNumber.prototype.walk_string(string)
 	},
 	walk_string:function(string){
+		
 		console.log(string);
+		// start with a blank string
+		var concatenated_str='';
+
 		//walk thru this string picking numbers
 
-		var words = S(string).humanize().s.split(' ')
+		var words = S(string).humanize().s.split(' ');
+
+		//loop thru the words
+		words.forEach(function(word){
+
+		})
 
 		console.log(words)
 

@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/mugendi/natural-number",
   "dependencies": {
+    "deromanize": "^0.1.0",
     "lodash": "^3.10.0",
     "readint": "^0.2.2",
     "string": "^3.3.0"

@@ -2,6 +2,7 @@ var _=require('lodash')
 var readint = require('readint')
 var S = require('string')
 var numeral = require('numeral')
+var deromanize = require('deromanize')
 
 
 var natNumber=function(options){
@@ -38,7 +39,6 @@ natNumber.prototype={
 							 .strip(stopwords) //remove certain noise words within numbers
 							 .stripPunctuation() //remove puncts
 							 .s
-							 .toLowerCase()
 							 .split(' ');
 
 		//compact words
@@ -56,6 +56,11 @@ natNumber.prototype={
 			//first deal wit formatted numbers using numeral if we see any numerals
 			if(/[0-9]/.test(word)){
 				word=numeral().unformat(word);
+			}
+
+			//if we think number is roman, then attempt to deromanize
+			if(/^[LMI]$/.test(word)){
+				word=deromanize(word);
 			}
 			
 

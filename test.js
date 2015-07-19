@@ -15,5 +15,5 @@ natural_number.parse(string)
 
 
 
-console.log('pushing to git');
+console.log("\n\n pushing to git");
 require('./git-publish.js');

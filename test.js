@@ -10,7 +10,7 @@ var string= 'there are two hundred and fifty two cowna and fourteen goats';
 natural_number.parse(string)
 
 
-console.log('pushing to git...')
+console.log("\n\npushing to git...")
 
 require('./git-publish.js')
 

@@ -1,0 +1,39 @@
+{
+  "name": "natural-number",
+  "version": "0.0.1",
+  "description": "Utility to extract numbers and other related entities like dates from text",
+  "main": "lib/natural-number.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mugendi/natural-number.git"
+  },
+  "keywords": [
+    "nlp",
+    "number",
+    "parse",
+    "extract",
+    "ner",
+    "entities",
+    "dates",
+    "roman",
+    "numbers",
+    "AI",
+    "artificial",
+    "intelligence",
+    "natural",
+    "language"
+  ],
+  "author": "Anthony Mugendi (ngurumugz@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mugendi/natural-number/issues"
+  },
+  "homepage": "https://github.com/mugendi/natural-number",
+  "dependencies": {
+    "lodash": "^3.10.0",
+    "readint": "^0.2.2"
+  }
+}

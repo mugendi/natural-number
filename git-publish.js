@@ -1,9 +1,9 @@
 //push to git
-require('shelljs/global');
+var shell = require('shelljs');
 
 var cmd ='git status && git add -A && git commit -m "natural_number Auto-commit" && git push -u --all';
 
-exec(cmd, function(code, output) {
+shell.exec(cmd, function(code, output) {
   // console.log('Exit code:', code);
   console.log('Program output:', output);
 });

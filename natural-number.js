@@ -1,17 +1,11 @@
 var _=require('lodash')
-var readint = require('readint')
-var S = require('string')
-var numeral = require('numeral')
-var romantique = require('romantique');
-var Ordinal = require('ordinal')
-var isNumeric = require("isnumeric")
-var OrdinalWords =require('./data/ordinal-words.json')
-var num2String=require('number2string')
-var chrono = require('chrono-node')
-var Qty = require('js-quantities-all')
-var QtyPattern=new RegExp('^[0-9]+\s\*('+Qty.getUnits().join('|')+')$','i')
+var parse_numbers=require('parse-numbers')
+var parse_dates = require ( 'parse-dates' )
+var parse_quantity = require('js-quantities-all')
+var parse_emoji = require ( 'parse-emoji' )
+var parse_abbrs = require('parse-abbrs')
 
-
+var async=require('async');
 
 var natNumber=function(options){
 
@@ -34,154 +28,98 @@ natNumber.prototype={
 		// console.log(readint('one', natNumber.options.lang))
 		var parsed={}
 
-		parsed=_.merge(
-			natNumber.prototype.parse_numbers(string),
-			natNumber.prototype.parse_dates(string)
-		)
-
-		console.log(JSON.stringify(parsed,0,4))
-	},
-	parse_dates:function(string){
-		var dates = chrono.parseDate('An appointment on Sep 12-13') ;
-		console.log(dates);
-	},
-	parse_numbers:function(string){
-		
-		// console.log(string);
-		// start with a blank array
-		var concat_words=[];
-		var concat_raw=[];
-		//words to skip
-		var skipwords=['and']
-		var stopwords=['and']
-
-		var numbers={
-			numerals:[],
-			formatted:[],
-			ordinals:[]
-		}
-
-		var measures=[]
+		async.waterfall([
+			//start waterfall
+			function(callback){
+				callback(null,string,parsed)
+			},
+			//numbers
+			natNumber.prototype.parse_numbers,
+			//quantities
+			natNumber.prototype.parse_quantities,
+			// dates
+			natNumber.prototype.parse_dates,
+			//emoji
+			natNumber.prototype.parse_emoji,
+			//abbreviations
+			natNumber.prototype.parse_abbrs
 
 
-		//split into words
-		var words = natNumber.prototype.splitWords(string,stopwords);
+		],function (err,text, parsed) {
+		    // result now equals 'done'
 
-		//compact words
-		words=_.compact(words);
-		//add one  token at the end to ensure even last word is looped over
-		words.push('NOT NUMBER');
-		var word_='';
-
-		var number=null;
-	
-		var ordinal=Ordinal[natNumber.options.lang_name]
-		
-		var ordinal_words=OrdinalWords[natNumber.options.lang],
-			ordinal_words_=_.keys(ordinal_words);
-
-		//loop thru the words
-		words.forEach(function(word){
-
-			raw_word=_.clone(word);
-
-			//first deal wit formatted numbers using numeral if we see any numerals
-			if(/([^0-9][0-9]|[0-9][^0-9])/.test(word)){
-				word_=numeral().unformat(word);
-
-				//include old number (formatted)
-				if(_.isNumber(word_) && natNumber.options.include_formatted){
-					numbers.formatted.push(word);
-				}			
-
-				//try to pass measures
-				if(QtyPattern.test(word)){
-					var qty = Qty(word); 
-					measures=_.union(qty.toAll());
-				}	
-
-				word=word_;
-			}
-
-			//if we think number is roman, then attempt to deromanize
-			if(romantique.roman.validate(word)){
-
-				word_=romantique.roman.toDecimal(word);
-
-				//include old number (formatted)
-				if(_.isNumber(word_) && natNumber.options.include_formatted){
-					numbers.formatted.push(word);
-				}				
-
-				word=word_;
-			}
-
-			//if an ordinal word
-			if(_.indexOf(ordinal_words_,word)>-1){
-
-				word_=ordinal_words[word];
-
-				//include old number (formatted)
-				if(natNumber.options.include_formatted){
-					numbers.formatted.push(word);
-				}		
-
-
-				word=word_;
-			}
-			
-
-			//test for number
-			number= readint(word, natNumber.options.lang) 
-
-			//add word to concat untill number match is broken
-			if(number>-1){
-				//before we add word, ensure its not a numeric but its string representation
-				if(/^[0-9]+$/.test(word)){
-					word=num2String.toString(word);
-				}
-
-				//now add both word & raw word
-				concat_words.push(word);
-				concat_raw.push(raw_word);
-			}
-			else{
-				//if concatwords then read the number
-				if(concat_words.length){
-					// console.log(concat_words)
-
-					//join all words
-					word_=concat_words.join(' ')
-
-					number= isNumeric(word_) ? numeral().unformat(word_)  //if numeric then do simple parse
-							: readint(word_, natNumber.options.lang); //else attempt to read number
-
-					numbers.numerals.push(number);
-
-					//if we need ordinals
-					if(
-						natNumber.options.include_ordinals //if include_ordinals
-						&& number>0  //& number is greater than zero
-						&& !/\./.test(number) //& number is not a decimal
-						&& ( !/^[0-9]+\s*[a-z]+$/i.test(concat_raw[0]) ) //original Number is not stuff like 5GB (i.e number with units)
-					){
-						numbers.ordinals.push(ordinal(number))
-					}
-				}
-				//reset concat words
-				concat_words=[];
-				concat_raw=[];
-			}
-
+		    console.log(JSON.stringify(parsed,0,4))
 		})
 
-		
-		// console.log(concat_words)
-		return {
-			numbers:numbers,
-			measures:measures
-		};
+	
 	},
+	parse_abbrs:function(string,parsed,callback){
+		var p=parse_abbrs(string);
+		parsed=_.merge(parsed,{abbrs:p});
+		callback(null,string,parsed)
+	},
+	parse_dates:function(string,parsed,callback){
+		var p=parse_dates(string);
+		parsed=_.merge(parsed,{dates:p});
+		callback(null,string,parsed)
+	},
+	parse_emoji:function(string,parsed,callback){
+		var p=parse_emoji(string,function(emoji){
+			parsed=_.merge(parsed,{emoji:emoji});
+			callback(null,string,parsed)	
+		});
+		
+	},
+	parse_quantities:function(string,parsed,callback){
+
+		var units=parse_quantity.getUnits(),
+			toAll=[];;
+		var QtyRegex=new RegExp('\\b[0-9]+\\s*('+units.join('|')+')\\b','ig');
+
+		// pick all values looking like quantities i.e 10 l, 15 kgs, 5BG etc
+		var matches=string.match(QtyRegex);
+
+		// var out=_.clone(string);
+		// var annotated=_.clone(string);
+		var measures={
+
+			measures:[],
+			string:{
+				in:_.clone(string),
+				out:_.clone(string),
+				annotated:_.clone(string)
+			}
+		};
+
+		if(matches){
+			//loop through the units converting each
+			matches.forEach(function(measure){
+
+				//set measure
+				qty = parse_quantity(measure); // factory
+				//convert to all applicable units
+				toAll=qty.toAll();	
+
+				//replace with first str instance
+				measures.string.annotated=measures.string.annotated.replace(measure,"{MEASURE: "+toAll[0].str+"}");
+
+				measures.measures=_.union(measures.measures,toAll);
+			})
+	
+		}
+
+		// return measures;
+		parsed=_.merge(parsed,{measures:measures});
+		callback(null,string,parsed)
+		
+	},
+	parse_numbers: function(string,parsed,callback){
+		var p=parse_numbers(string);
+		parsed=_.merge(parsed,{numbers:p});
+
+		callback(null,p.string.out,parsed)
+	},
+
 	splitWords:function(string,stopwords){
 
 		var words=[];

@@ -33,15 +33,12 @@
   },
   "homepage": "https://github.com/mugendi/natural-number",
   "dependencies": {
-    "chrono-node": "^1.0.6",
-    "deromanize": "^0.1.0",
-    "isnumeric": "^0.2.0",
-    "js-quantities-all": "0.0.1",
+    "async": "^1.4.2",
+    "js-quantities-all": "0.0.5",
     "lodash": "^3.10.0",
-    "number2string": "0.0.1",
-    "ordinal": "0.0.2",
-    "readint": "^0.2.2",
-    "romantique": "^0.1.0",
-    "string": "^3.3.0"
+    "parse-abbrs": "^1.0.0",
+    "parse-dates": "^1.0.2",
+    "parse-emoji": "^1.0.0",
+    "parse-numbers": "^1.0.1"
   }
 }

@@ -4,6 +4,7 @@ var parse_dates = require ( 'parse-dates' )
 var parse_quantity = require('js-quantities-all')
 var parse_emoji = require ( 'parse-emoji' )
 var parse_abbrs = require('parse-abbrs')
+var sentiment=require('multi-sentiment')
 
 var async=require('async');
 
@@ -15,14 +16,11 @@ var natNumber=function(options){
 		include_formatted:true,
 		include_ordinals:true
 	},options)
-
-
 }
 
-
-
 natNumber.prototype={
-	parse:function(string){
+
+	parse:function(string,omit_string,callback){
 		// console.log(string,natNumber.options);
 
 		// console.log(readint('one', natNumber.options.lang))
@@ -42,16 +40,39 @@ natNumber.prototype={
 			//emoji
 			natNumber.prototype.parse_emoji,
 			//abbreviations
-			natNumber.prototype.parse_abbrs
+			natNumber.prototype.parse_abbrs,
+
+			//parse sentiment
+			natNumber.prototype.sentiment
 
 
 		],function (err,text, parsed) {
 		    // result now equals 'done'
 
-		    console.log(JSON.stringify(parsed,0,4))
+		    //if omit string
+		    if(omit_string){
+			    for(var key in parsed){
+			    	parsed[key]=_.omit(parsed[key],'string');
+			    }	
+		    }
+		    
+
+		    callback(parsed)
 		})
 
 	
+	},
+	sentiment: function(string,parsed,callback){
+
+		sentiment(string,function(sentiment){
+
+			parsed=_.merge(parsed,{sentiment:sentiment});
+
+			callback(null,string,parsed);
+
+		});
+
+		
 	},
 	parse_abbrs:function(string,parsed,callback){
 		var p=parse_abbrs(string);

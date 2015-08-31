@@ -9,12 +9,12 @@ var string= 'there are two hundred and fifty two cowna and fourteen goats. Negat
 
 // var string="200 his is an angry 💬 🔔 and then there is another ghoul in the house :-) :') :'("
 
-var string="At the 22nd world travel awards kigali serena was awarded rwandas leading hotel serenawta long timelong timethe finest customer service";
+// var string="At the 22nd world travel awards kigali serena was awarded rwandas leading hotel serenawta long timelong timethe finest customer service";
 
 
 console.log(string+"\n\n\n")
 
-natural_number.parse(string,true,function(parsed){
+natural_number.parse(string,false,function(parsed){
 	console.log(JSON.stringify(parsed,0,4))
 })
 

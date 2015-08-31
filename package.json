@@ -2,7 +2,7 @@
   "name": "natural-number",
   "version": "1.0.2",
   "description": "Utility to extract numbers and other related entities like dates from text",
-  "main": "lib/natural-number.js",
+  "main": "natural-number.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

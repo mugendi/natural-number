@@ -11,6 +11,7 @@ var string= 'there are two hundred and fifty two cowna and fourteen goats. Negat
 
 // var string="At the 22nd world travel awards kigali serena was awarded rwandas leading hotel serenawta long timelong timethe finest customer service";
 
+// string=' I am very ;-) IKR'
 
 console.log(string+"\n\n\n")
 

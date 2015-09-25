@@ -2,9 +2,6 @@ var _=require('lodash')
 var parse_numbers=require('parse-numbers')
 var parse_dates = require ( 'parse-dates' )
 var parse_quantity = require('js-quantities-all')
-var parse_emoji = require ( 'parse-emoji' )
-var parse_abbrs = require('parse-abbrs')
-var sentiment=require('multi-sentiment')
 
 var async=require('async');
 
@@ -36,14 +33,7 @@ natNumber.prototype={
 			//quantities
 			natNumber.prototype.parse_quantities,
 			// dates
-			natNumber.prototype.parse_dates,
-			//emoji
-			natNumber.prototype.parse_emoji,
-			//abbreviations
-			natNumber.prototype.parse_abbrs,
-
-			//parse sentiment
-			natNumber.prototype.sentiment
+			natNumber.prototype.parse_dates
 
 
 		],function (err,text, parsed) {
@@ -62,34 +52,11 @@ natNumber.prototype={
 
 	
 	},
-	sentiment: function(string,parsed,callback){
 
-		sentiment(string,function(sentiment){
-
-			parsed=_.merge(parsed,{sentiment:sentiment});
-
-			callback(null,string,parsed);
-
-		});
-
-		
-	},
-	parse_abbrs:function(string,parsed,callback){
-		var p=parse_abbrs(string);
-		parsed=_.merge(parsed,{abbrs:p});
-		callback(null,string,parsed)
-	},
 	parse_dates:function(string,parsed,callback){
 		var p=parse_dates(string);
 		parsed=_.merge(parsed,{dates:p});
 		callback(null,string,parsed)
-	},
-	parse_emoji:function(string,parsed,callback){
-		var p=parse_emoji(string,function(emoji){
-			parsed=_.merge(parsed,{emoji:emoji});
-			callback(null,string,parsed)	
-		});
-		
 	},
 	parse_quantities:function(string,parsed,callback){
 

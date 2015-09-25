@@ -1,6 +1,6 @@
 {
   "name": "natural-number",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Utility to extract numbers and other related entities like dates from text",
   "main": "natural-number.js",
   "scripts": {
@@ -36,10 +36,10 @@
     "async": "^1.4.2",
     "js-quantities-all": "0.0.5",
     "lodash": "^3.10.0",
-    "multi-sentiment": "^1.0.1",
     "parse-abbrs": "^1.0.0",
     "parse-dates": "^1.0.2",
     "parse-emoji": "^1.0.0",
     "parse-numbers": "^1.0.1"
-  }
+  },
+  "devDependencies": {}
 }

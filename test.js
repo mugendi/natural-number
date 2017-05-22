@@ -1,5 +1,5 @@
 
-var natN=require('./natural-number.js');
+var natN=require('./lib/natural-number.js');
 
 var natural_number=new natN({ lang:'en' })
 

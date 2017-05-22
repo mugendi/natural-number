@@ -1,8 +1,8 @@
 {
   "name": "natural-number",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Utility to extract numbers and other related entities like dates from text",
-  "main": "natural-number.js",
+  "main": "lib/natural-number.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

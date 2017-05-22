@@ -1,0 +1,7 @@
+node_modules
+*.log
+*.ico
+*.ini
+*.rar
+*.csv
+*.ts

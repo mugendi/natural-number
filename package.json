@@ -34,7 +34,7 @@
   "homepage": "https://github.com/mugendi/natural-number",
   "dependencies": {
     "async": "^1.4.2",
-    "js-quantities-all": "0.0.7",
+    "js-quantities-all": "^0.0.8",
     "lodash": "^3.10.0",
     "parse-abbrs": "^1.0.0",
     "parse-dates": "^1.0.2",

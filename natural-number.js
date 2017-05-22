@@ -83,6 +83,7 @@ natNumber.prototype={
 			//loop through the units converting each
 			matches.forEach(function(measure){
 
+				// console.log(measure);
 				//set measure
 				qty = parse_quantity(measure); // factory
 				//convert to all applicable units

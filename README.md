@@ -1,14 +1,17 @@
 
-#Expand a string with quantities
+#An advanced entity extractor for numbers, units and dates
 
-Say you have the following string: *"5GB"*, you can expand it to its numeric representation using this module.
+This module is used to:
+- parse numbers, units, dates in a string
+- extract parsed numbers, units & dates
+- expand parsed numbers, units, dates
 
-It's actually very simple to use... 
+Usage is pretty easy, simply give it a string to crunch...
 
 
 ```javascript
 
-var natN=require('./natural-number.js');
+var natN=require('natural-number');
 
 var natural_number=new natN({ lang:'en' })
 

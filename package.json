@@ -1,6 +1,6 @@
 {
   "name": "natural-number",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Utility to extract numbers and other related entities like dates from text",
   "main": "lib/natural-number.js",
   "scripts": {
@@ -21,8 +21,6 @@
     "roman",
     "numbers",
     "AI",
-    "artificial",
-    "intelligence",
     "natural",
     "language"
   ],

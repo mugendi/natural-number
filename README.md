@@ -1,5 +1,5 @@
 
-#An advanced entity extractor for numbers, units and dates
+# An advanced entity extractor for numbers, units and dates
 
 This module is used to:
 - parse numbers, units, dates in a string
